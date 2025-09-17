@@ -1,0 +1,73 @@
+DATA:
+  dataset: DistilREGRAD
+  root_dir: /mnt/sda/datasets/REGRAD_v2_all
+  feat_key: per_obj
+  processed_dir: processed_clip
+  objects_train_path: objects_single.json
+  objects_val_path: objects_refer_test.json
+  voxel_size: 0.001
+  feat_dim: 768
+  use_color: True
+  n_classes: 44
+  # Data augmentation
+  use_augmentation: True
+  aug_random_shift: True
+  use_color_augmentation: False
+  aug_color_trans_ratio: 0.1
+  aug_color_jitter_std: 0.05
+  aug_hue_max: 0.025
+  aug_saturation_max: 0.2
+  aug_elastic_distortion_granularity_min: 0.1
+  aug_elastic_distortion_granularity_max: 0.3
+  aug_elastic_distortion_magnitude_min: 0.4
+  aug_elastic_distortion_magnitude_max: 0.8
+  aug_n_blob_min: 1
+  aug_n_blob_max: 2
+  aug_blob_size_min: 50
+  aug_blob_size_max: 101
+
+MODEL:
+  arch_3d: MinkUNet14D
+  amp: True
+  ignore_label: 255
+  workers: 8  # data loader workers
+  workers_val: 2
+  batch_size: 16  # batch size for training
+  batch_size_val: 2  # batch size for validation during training, memory and speed tradeoff
+  base_lr: 0.0001
+  weight_decay: 0.00001
+  min_lr: 0.00001
+  loss_type: cosine # l1 | cosine
+  use_aux_loss: False
+  use_cls_head: False
+  loss_weight_aux: 1.0
+  loss_weight_cls: 0.1
+  dropout_rate: 0.0
+  epochs: 100
+  start_epoch: 0
+  power: 0.9
+  momentum: 0.9
+  max_norm: 10.0
+  sync_bn: True
+  manual_seed: 1026
+  print_freq: 20
+  save_freq: 1
+  save_path: /home/hilbertxu/refer_stuff_george/REGRAD_stuff/experiments
+  resume:
+  evaluate: True  # evaluate on validation set, extra gpu memory needed and small batch_size_val is recommend
+  visualize: False
+  eval_task: grounding
+  eval_freq: 1
+  eval_scenario: cls
+  sim_norm_thresh: 0.6
+  sim_method: paired
+  sim_negatives: generic
+  use_wandb: False
+
+
+Distributed:
+  dist_url: tcp://127.0.0.1:6787
+  dist_backend: 'nccl'
+  multiprocessing_distributed: True
+  world_size: 1
+  rank: 0

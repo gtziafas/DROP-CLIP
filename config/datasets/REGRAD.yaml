@@ -1,0 +1,18 @@
+DATA:
+  dataset: REGRAD_v2_all
+  num_views: 9
+  root_dir: /home/p300488/REGRAD-Ref/REGRAD_stuff/data
+  camera_file: camera_info.npy
+  as_views: False
+  image_resize: 
+  with_depth: True
+  with_seg: True
+  with_grasp: True
+  analytical_scores: False
+  include_pc_filtered: True
+  reference_frame: world
+  gripper_type: franka_panda
+  grasp_dir: Points
+  RGB_dir: RGBImages
+  Depth_dir: DepthImages
+  Seg_dir: SegmentationImages

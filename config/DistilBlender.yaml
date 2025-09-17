@@ -1,0 +1,86 @@
+DATA:
+  dataset: DistilBlender
+  root_dir: /home/p300488/REGRAD-Ref/data/Blender-temp/processed
+  scene_root: ./_dumps/sorted_ADVR_PC2
+  feat_key: per_obj
+  voxel_size: 0.05
+  feat_dim: 768
+  use_color: True
+  n_classes: 44
+  use_view_clip: False
+  use_view_clip: False
+  use_full_pc: False
+  use_k_views: 3
+  use_view_ids: 0,3,15,27,39,51,63
+  # Data augmentation
+  use_augmentation: True
+  aug_random_shift: True
+  use_color_augmentation: True
+  aug_color_trans_ratio: 0.01
+  aug_color_jitter_std: 0.02
+  aug_hue_max: 0.01
+  aug_saturation_max: 0.1
+  aug_elastic_distortion_granularity_min: 0.1
+  aug_elastic_distortion_granularity_max: 0.3
+  aug_elastic_distortion_magnitude_min: 0.4
+  aug_elastic_distortion_magnitude_max: 0.8
+  aug_n_blob_min: 1
+  aug_n_blob_max: 2
+  aug_use_blob_removal: False
+  aug_blob_size_min: 50
+  aug_blob_size_max: 101
+  aug_random_rotation: True
+  aug_random_euler_order: True
+  aug_random_rot_chance: 0.6
+  aug_rotate_min_x: -0.1309
+  aug_rotate_max_x: 0.1309
+  aug_rotate_min_y: -0.1309
+  aug_rotate_max_y: 0.1309
+  aug_rotate_min_z: -0.1309
+  aug_rotate_max_z: 0.1309
+
+MODEL:
+  arch_3d: MinkUNet14D
+  amp: True
+  ignore_label: 255
+  workers: 8  # data loader workers
+  workers_val: 2
+  batch_size: 8  # batch size for training
+  batch_size_val: 8  # batch size for validation during training, memory and speed tradeoff
+  base_lr: 0.0003
+  weight_decay: 0.00001
+  min_lr: 0.0001
+  loss_type: cosine # l1 | cosine
+  use_aux_loss: False
+  use_cls_head: False
+  loss_weight_aux: 1.0
+  loss_weight_cls: 0.1
+  dropout_rate: 0.0
+  epochs: 200
+  start_epoch: 0
+  power: 0.9
+  momentum: 0.9
+  max_norm: 5.0
+  sync_bn: True
+  manual_seed: 42
+  print_freq: 25
+  save_freq: 1
+  save_path: ./experiments
+  resume: #exp/Distill-DistilBlender/05-05-2024-12:36/last_model.pth
+  evaluate: True  # evaluate on validation set, extra gpu memory needed and small batch_size_val is recommend
+  visualize: False
+  eval_task: 'grounding'
+  eval_freq: 1
+  eval_scenario: cls
+  sim_norm_thresh: 0.75
+  sim_method: paired
+  sim_negatives: generic
+  use_wandb: False
+
+
+Distributed:
+  dist_url: tcp://127.0.0.1:6787
+  dist_backend: 'nccl'
+  multiprocessing_distributed: True
+  world_size: 1
+  rank: 0
