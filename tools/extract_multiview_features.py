@@ -211,7 +211,7 @@ class CLIPFeatures:
         feat = einops.rearrange(feat, 'h p1 w p2 c -> (h p1) (w p2) c')
         return feat
 
-    @torch.no_grad():
+    @torch.no_grad()
     def forward_features(self, images):
         for img in images:
             img = np.array(img)

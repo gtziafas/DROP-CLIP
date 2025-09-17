@@ -9,8 +9,6 @@ from datetime import datetime
 from functools import partial
 from collections import OrderedDict
 
-# os.environ["WANDB_MODE"] = "offline"
-os.environ["WANDB_API_KEY"] = '99ee90fdefff711f21b8b40a0fac1bdb95da2aa5'
 
 
 import cv2
